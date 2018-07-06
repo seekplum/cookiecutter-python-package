@@ -1,16 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
-
 from setuptools import setup, find_packages
 
-root = os.path.dirname(os.path.abspath(__file__))
-
-# 查询版本信息
-with open(os.path.join(root, "VERSION")) as f:
-    version = f.read().strip()
-
-requirements = []
+version = '0.1.0'
 
 setup(
     author="{{ cookiecutter.author }}",
@@ -19,7 +11,15 @@ setup(
         'Programming Language :: Python :: 2.7',
     ],
     description="{{ cookiecutter.description }}",
-    install_requires=requirements,
+    install_requires=[
+
+    ],
+    scripts=[
+
+    ],
+    setup_requires=[
+
+    ],
     include_package_data=True,
     name='{{ cookiecutter.project_slug }}',
     namespace_packages=['{{ cookiecutter.project_slug }}'],
