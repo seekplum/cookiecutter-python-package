@@ -1,0 +1,13 @@
+{
+  "project_name": "project_name",
+  "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '_')|replace('-', '_') }}",
+  "author": "seekplum",
+  "email": "1131909224m@sina.cn",
+  "description": "A short description of the project.",
+  "version": "0.1.0",
+  "use_pytest": "y",
+  "use_bumpversion": "y",
+  "pip_index_url": "https://pypi.douban.com/simple/",
+  "pip_trusted_host": "192.168.1.174",
+  "pip_extra_index_url": "http://{{cookiecutter.pip_trusted_host}}:8080"
+}
