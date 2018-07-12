@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
@@ -23,8 +22,18 @@ def sdist(ctx):
 
 
 @task
-def upload(ctx, py_name="private"):
-    ctx.run('python setup.py sdist upload -r %s' % py_name, echo=True)
+def upload(ctx, r="private"):
+    ctx.run('python setup.py sdist upload -r %s' % r, echo=True)
+
+
+@task
+def register(ctx, n, r="private"):
+    ctx.run('twine register %s -r %s' % (n, r), echo=True, warn=True)
+
+
+@task
+def tupload(ctx, n, r="private"):
+    ctx.run('twine upload %s -r %s' % (n, r), echo=True)
 
 
 @task
