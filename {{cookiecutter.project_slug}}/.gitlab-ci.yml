@@ -1,0 +1,21 @@
+before_script:
+  - pip install pipenv
+  - pipenv install --dev --skip-lock
+
+stages:
+ - check
+ - unittest
+
+check:
+  stage: check
+  script:
+    - inv check
+  tags:
+    - {{ cookiecutter.project_slug }}
+
+unittest:
+  stage: unittest
+  script:
+    - inv unittest
+  tags:
+    - {{ cookiecutter.project_slug }}
