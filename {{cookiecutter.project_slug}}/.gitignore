@@ -3,6 +3,7 @@
 *.egg
 *.pyc
 .cache
+test.py
 build
 dist
 
@@ -10,4 +11,6 @@ dist
 *.mo
 .idea
 .DS_Store
-test.py
+.vscode
+.pytest_cache
+.coverage
