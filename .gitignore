@@ -2,19 +2,24 @@
 *.egg-info
 *.egg
 *.pyc
+*.pye
 .cache
 build
 dist
+__pycache__
+.pytest_cache
 
 # Translations
 *.mo
+*.swp
+*.swap
+*.pid
+*.log
 
 # Vagrant
 .vagrant
 .bash_history
 
 .idea
-
 .tox
-
 .DS_STore
