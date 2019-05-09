@@ -9,6 +9,7 @@ dist
 
 # Translations
 *.mo
+*.dat
 .idea
 .DS_Store
 .vscode
