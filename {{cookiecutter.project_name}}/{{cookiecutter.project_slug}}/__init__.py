@@ -1,6 +1,6 @@
 """
 #=============================================================================
-#  ProjectName: {{cookiecutter.project_slug}}
+#  ProjectName: {{cookiecutter.project_name}}
 #     FileName: __init__.py
 #       Author: {{ cookiecutter.author }}
 #        Email: huangjiandong95@sina.com

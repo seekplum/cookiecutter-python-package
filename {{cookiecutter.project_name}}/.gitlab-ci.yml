@@ -11,11 +11,11 @@ check:
   script:
     - inv check
   tags:
-    - {{ cookiecutter.project_slug }}
+    - {{ cookiecutter.project_name }}
 
 unittest:
   stage: unittest
   script:
     - inv unittest
   tags:
-    - {{ cookiecutter.project_slug }}
+    - {{ cookiecutter.project_name }}

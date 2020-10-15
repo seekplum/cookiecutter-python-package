@@ -21,7 +21,7 @@ setup(
 
     ],
     include_package_data=True,
-    name='{{ cookiecutter.project_slug }}',
+    name='{{ cookiecutter.project_name }}',
     namespace_packages=['{{ cookiecutter.project_slug }}'],
     packages=find_packages(exclude=['tests', 'docs']),
     version=version,

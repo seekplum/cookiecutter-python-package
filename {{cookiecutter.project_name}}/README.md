@@ -1,6 +1,6 @@
 # {{ cookiecutter.description }}
 
-[![LICENSE](https://img.shields.io/github/license/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}.svg)](https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/blob/master/LICENSE)[![travis-ci](https://travis-ci.org/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}.svg?branch=master)](https://travis-ci.org/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }})[![coveralls](https://coveralls.io/repos/github/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/badge.svg?branch=master)](https://coveralls.io/github/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}?branch=master) [![pypi version](https://img.shields.io/pypi/v/{{ cookiecutter.project_slug }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_slug }}) [![pyversions](https://img.shields.io/pypi/pyversions/{{ cookiecutter.project_slug }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_slug }})
+[![LICENSE](https://img.shields.io/github/license/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.svg)](https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/blob/master/LICENSE)[![travis-ci](https://travis-ci.org/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.svg?branch=master)](https://travis-ci.org/{{ cookiecutter.author }}/{{ cookiecutter.project_name }})[![coveralls](https://coveralls.io/repos/github/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/badge.svg?branch=master)](https://coveralls.io/github/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}?branch=master) [![pypi version](https://img.shields.io/pypi/v/{{ cookiecutter.project_name }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_name }}) [![pyversions](https://img.shields.io/pypi/pyversions/{{ cookiecutter.project_name }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_name }})
 
 ## 项目的git hooks
 
@@ -29,7 +29,7 @@ cp -r hooks/* .git/hooks/
 ├── VERSION             # 项目版本文件
 ├── bin                 # 项目二进制程序
 ├── docs                # 项目文档
-├── {{cookiecutter.project_slug}}          # 核心代码模块
+├── {{cookiecutter.project_name}}          # 核心代码模块
 ├── setup.cfg           # 安装配置文件
 ├── setup.py            # 安装脚本
 ├── tasks.py            # 任务执行脚本
