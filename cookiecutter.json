@@ -7,7 +7,7 @@
   "version": "0.1.0",
   "use_pytest": "y",
   "use_bumpversion": "y",
-  "pip_index_url": "https://pypi.douban.com/simple/",
-  "pip_trusted_host": "192.168.1.174",
-  "pip_extra_index_url": "http://{{cookiecutter.pip_trusted_host}}:8080"
+  "pip_index_url": "https://mirrors.aliyun.com/pypi/simple",
+  "pip_trusted_host": "pypi.org/simple",
+  "pip_extra_index_url": "https://{{cookiecutter.pip_trusted_host}}:80"
 }

@@ -1,9 +1,13 @@
 [[source]]
-url = "https://pypi.douban.com/simple/"
+url = "https://mirrors.aliyun.com/pypi/simple"
 verify_ssl = true
-name = "douban"
+name = "aliyun"
 
 [dev-packages]
+autoflake = "*"
+# black = "*"  # Only Python3
+isort = "*"
+mypy = "==0.256"
 invoke = "*"
 bumpversion = "*"
 pytest = "*"

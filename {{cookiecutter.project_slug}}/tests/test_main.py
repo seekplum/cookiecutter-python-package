@@ -13,7 +13,7 @@ def main():
 
     file_path = os.path.join(curr_path)
     if len(sys.argv) > 1:
-        args = [sys.argv[1:]]
+        args = sys.argv[1:]
     elif (file_path.endswith(".py") and os.path.exists(file_path)) or (not file_path.endswith(".py")):
         args = [file_path]
     else:
