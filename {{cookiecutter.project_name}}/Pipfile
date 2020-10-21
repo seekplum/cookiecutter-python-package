@@ -5,9 +5,9 @@ name = "aliyun"
 
 [dev-packages]
 autoflake = "*"
-# black = "*"  # Only Python3
+{% if cookiecutter.python_version[0] == '3' %}black = "*"  # Only Python3{% endif %}
 isort = "*"
-mypy = "==0.256"
+{% if cookiecutter.python_version[0] == '2' %}mypy = "==0.256"{% else %}mypy = "*"{% endif %}
 invoke = "*"
 bumpversion = "*"
 pytest = "*"
@@ -17,8 +17,10 @@ mock = "*"
 twine = "*"
 coverage = "*"
 coveralls = "*"
-pylint = "==1.9.3"
+{% if cookiecutter.use_pylint.lower() in ('y', 'yes') %}{% if cookiecutter.python_version[0] == '2' %}pylint = "==1.9.3"{% else %}pylint = "*"{% endif %}{% else %}flake8 = "*"{% endif %}
+pre-commit = "*"
 
 [packages]
 
 [requires]
+python_version = "{{ cookiecutter.python_version }}"
