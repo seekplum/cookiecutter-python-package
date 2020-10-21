@@ -8,7 +8,7 @@ setup(
     author="{{ cookiecutter.author }}",
     author_email='{{ cookiecutter.email }}',
     classifiers=[
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: {{ cookiecutter.python_version }}',
     ],
     description="{{ cookiecutter.description }}",
     install_requires=[

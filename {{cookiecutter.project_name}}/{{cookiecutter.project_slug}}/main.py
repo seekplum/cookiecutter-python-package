@@ -1,10 +1,17 @@
+# -*- coding: utf-8 -*-
 """
 #=============================================================================
 #  ProjectName: {{cookiecutter.project_name}}
-#     FileName: __init__.py
+#     FileName: main.py
 #       Author: {{ cookiecutter.author }}
 #        Email: huangjiandong95@sina.com
 #=============================================================================
 """
 
-__import__("pkg_resources").declare_namespace(__name__)
+
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()
