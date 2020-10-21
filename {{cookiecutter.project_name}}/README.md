@@ -1,17 +1,8 @@
 # {{ cookiecutter.description }}
 
-[![LICENSE](https://img.shields.io/github/license/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.svg)](https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/blob/master/LICENSE)[![travis-ci](https://travis-ci.org/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.svg?branch=master)](https://travis-ci.org/{{ cookiecutter.author }}/{{ cookiecutter.project_name }})[![coveralls](https://coveralls.io/repos/github/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/badge.svg?branch=master)](https://coveralls.io/github/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}?branch=master) [![pypi version](https://img.shields.io/pypi/v/{{ cookiecutter.project_name }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_name }}) [![pyversions](https://img.shields.io/pypi/pyversions/{{ cookiecutter.project_name }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_name }})
-
-## 项目的git hooks
-
-由于钩子文件无法提交到 `.git` 中，所以在第一次clone项目中需要执行以下命令，把钩子放到指定位置
-
-```bash
-cp -r hooks/* .git/hooks/
-```
+[![LICENSE](https://img.shields.io/github/license/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.svg)](https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/blob/master/LICENSE){% if cookiecutter.use_travis.lower() in ('y', 'yes')%}[![travis-ci](https://travis-ci.org/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.svg?branch=master)](https://travis-ci.org/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}){% endif %}[![coveralls](https://coveralls.io/repos/github/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/badge.svg?branch=master)](https://coveralls.io/github/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}?branch=master) [![pypi version](https://img.shields.io/pypi/v/{{ cookiecutter.project_name }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_name }}) [![pyversions](https://img.shields.io/pypi/pyversions/{{ cookiecutter.project_name }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_name }})
 
 ## 目录结构
-
 
 ```text
 ➜  tree -L 1 -a
@@ -39,7 +30,7 @@ cp -r hooks/* .git/hooks/
 
 ## 安装环境依赖
 
-1.安装pipenv
+1.安装 pipenv
 
 ```bash
 pip install pipenv
@@ -50,6 +41,23 @@ pip install pipenv
 ```bash
 pipenv --two install --deploy # py2
 pipenv --three install --deploy # py3
+```
+
+3.安装 Git hooks
+
+由于钩子文件无法提交到 `.git` 中，所以在第一次 clone 项目中需要执行以下命令，把钩子放到指定位置，有两种方式，建议使用第一种
+
+第一种
+
+```bash
+pre-commit install -t pre-commit
+pre-commit install -t pre-push
+```
+
+第二种
+
+```bash
+cp -r hooks/* .git/hooks/
 ```
 
 ## 运行单元测试
@@ -72,7 +80,7 @@ inv coverage
 inv unittest
 ```
 
-## 检查Python代码规范
+## 检查 Python 代码规范
 
 ```bash
 inv check
