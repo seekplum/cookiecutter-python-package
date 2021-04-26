@@ -36,6 +36,7 @@ def remove_files():
     check_file_required('{{ cookiecutter.use_github_ci }}', '.github')
     check_file_required('{{ cookiecutter.use_pylint }}', '.pylintrc')
     check_file_required('{{ cookiecutter.use_travis }}', '.travis.yml')
+    check_file_required('{{ cookiecutter.use_poetry }}', 'pyproject.toml')
 
 
 def main():

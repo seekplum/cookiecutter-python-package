@@ -12,6 +12,7 @@
   "use_github_ci": "y",
   "use_pylint": "n",
   "use_travis": "y",
+  "use_poetry": "n",
   "pip_index_url": "https://mirrors.aliyun.com/pypi/simple",
   "pip_trusted_host": "pypi.org/simple",
   "pip_extra_index_url": "https://{{cookiecutter.pip_trusted_host}}:80"

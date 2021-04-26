@@ -1,0 +1,88 @@
+[tool.poetry]
+authors = ["{{cookiecutter.author}}"]
+description = "{{cookiecutter.description}}"
+name = "{{cookiecutter.project_slug}}"
+version = "{{cookiecutter.version}}"
+
+[tool.poetry.dependencies]
+python = "^{{ cookiecutter.python_version }}"
+
+[tool.poetry.dev-dependencies]
+autoflake = "*"
+{% if cookiecutter.python_version[0] == '3' %}black = "*"  # Only Python3{% endif %}
+isort = "*"
+{% if cookiecutter.python_version[0] == '2' %}mypy = "==0.256"{% else %}mypy = "*"{% endif %}
+invoke = "*"
+bumpversion = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-benchmark = "*"
+mock = "*"
+twine = "*"
+coverage = "*"
+coveralls = "*"
+{% if cookiecutter.use_pylint.lower() in ('y', 'yes') %}{% if cookiecutter.python_version[0] == '2' %}pylint = "==1.9.3"{% else %}pylint = "*"{% endif %}{% else %}flake8 = "*"{% endif %}
+pre-commit = "*"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool.pylint.master]
+job = 0 # 默认多进程
+suggestion-mode = "yes" # 显示建议
+
+[tool.pylint.format]
+max-line-length = 120 # 每行宽度限制
+
+[tool.pylint.basic] # 名称规范
+argument-naming-style = "any" # 参数名称
+attr-naming-style = "any" # 类属性名称
+function-naming-style = "any" # 函数名称
+method-naming-style = "any" # 方法名称
+variable-naming-style = "any" # 变量名称
+
+[tool.pylint.message_control]
+# 不检查项目，尽量不要随意添加
+disable = [
+    "missing-docstring", # 缺少docstring
+    "logging-fstring-interpolation"
+]
+
+[tool.pylint.design]
+min-public-methods = 0 # 类公共方法数目最小限制放宽为0
+
+[tool.pytest.ini_options]
+addopts = " -svv --cov={{cookiecutter.project_slug}}"
+minversion = "6.0"
+testpaths = [
+  "tests",
+]
+
+[tool.coverage.report]
+exclude_lines = [ # 哪些代码块不进行覆盖率检查
+  "pragma: no cover",
+  "def __repr__",
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:",
+]
+fail_under = 60.0 # 覆盖率指标
+show_missing = true # 在报告中显示未覆盖的代码行号
+skip_covered = true # 报告中不显示满足覆盖率要求的文件
+skip_empty = true # 报告中不显示空文件
+sort = "miss" # 按代码覆盖率从低到高排序
+
+[tool.coverage.path]
+source = "{{cookiecutter.project_slug}}" # 代码覆盖检查目录
+
+[tool.black]
+line-length = 120 # 每行代码宽度限制，需要和pylint配置匹配
+
+[tool.isort]
+include_trailing_comma = true
+line_length = 120
+multi_line_output = 3
+profile = "black"
+src_paths = ["{{cookiecutter.project_slug}}", "tests"]
+use_parentheses = true
