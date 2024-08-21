@@ -9,7 +9,7 @@ import shutil
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
 
-def remove_file(file_path):
+def remove_file(file_path: str) -> None:
     """
     Remove a file with the given path.
 
@@ -23,25 +23,20 @@ def remove_file(file_path):
         shutil.rmtree(file_path)
 
 
-def check_file_required(option, file_path):
+def check_file_required(option: str, file_path: str) -> None:
     if option.lower() in ("y", "yes"):
         return
     remove_file(file_path)
 
 
-def remove_files():
-    check_file_required('{{ cookiecutter.use_bumpversion }}', '.bumpversion.cfg')
-    check_file_required('{{ cookiecutter.use_pytest }}', 'pytest.ini')
-    check_file_required('{{ cookiecutter.use_gitlab_ci }}', '.gitlab-ci.yml')
-    check_file_required('{{ cookiecutter.use_github_ci }}', '.github')
-    check_file_required('{{ cookiecutter.use_pylint }}', '.pylintrc')
-    check_file_required('{{ cookiecutter.use_travis }}', '.travis.yml')
-    check_file_required('{{ cookiecutter.use_poetry }}', 'pyproject.toml')
+def remove_files() -> None:
+    check_file_required("{{ cookiecutter.use_gitlab_ci }}", ".gitlab-ci.yml")
+    check_file_required("{{ cookiecutter.use_github_ci }}", ".github")
 
 
-def main():
+def main() -> None:
     remove_files()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

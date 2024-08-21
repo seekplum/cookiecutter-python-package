@@ -6,34 +6,32 @@ on:
     branches: master
     tags: "*"
 
+permissions:
+  contents: read
+
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  tests:
+    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        os: [ubuntu-latest, macOS-latest]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
 
       - name: Setup Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
         with:
-          python-version: {{ cookiecutter.python_version }}
+          python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
+          cache: "pip"
 
-      - name: Install dependencies with pipenv
-        run: |
-          pip install pipenv
-          pipenv install --deploy --dev --skip-lock
-
-      - run: inv check
-      - run: inv unittest
-      - run: inv coverage
-
-  docker-image:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Build docker image
-        run: docker build . -t {{ cookiecutter.project_name }}:test
-
-      - name: Smoke test docker image
-        run: |
-          docker run --rm {{ cookiecutter.project_name }}:test
+      - name: Install tools
+        run: pip install invoke
+      - name: Install dependencies
+        run: inv install --dev
+      - name: Code checker
+        run: inv lint
+      - name: Unittest
+        run: inv test

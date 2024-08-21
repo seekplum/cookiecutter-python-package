@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
+
 import os
 import sys
 
 import pytest
 
 
-def main():
+def main() -> None:
     curr_path = os.path.dirname(os.path.abspath(__file__))
     if len(sys.argv) > 1:
         args = sys.argv[1:]
@@ -20,5 +21,5 @@ def main():
     pytest.main(args)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

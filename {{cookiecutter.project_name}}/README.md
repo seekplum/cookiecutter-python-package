@@ -1,6 +1,6 @@
 # {{ cookiecutter.description }}
 
-[![LICENSE](https://img.shields.io/github/license/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.svg)](https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/blob/master/LICENSE){% if cookiecutter.use_travis.lower() in ('y', 'yes')%}[![travis-ci](https://travis-ci.org/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.svg?branch=master)](https://travis-ci.org/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}){% endif %}[![coveralls](https://coveralls.io/repos/github/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/badge.svg?branch=master)](https://coveralls.io/github/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}?branch=master) [![pypi version](https://img.shields.io/pypi/v/{{ cookiecutter.project_name }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_name }}) [![pyversions](https://img.shields.io/pypi/pyversions/{{ cookiecutter.project_name }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_name }})
+[![LICENSE](https://img.shields.io/github/license/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.svg)](https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/blob/master/LICENSE)[![coveralls](https://coveralls.io/repos/github/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/badge.svg?branch=master)](https://coveralls.io/github/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}?branch=master) [![pypi version](https://img.shields.io/pypi/v/{{ cookiecutter.project_name }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_name }}) [![pyversions](https://img.shields.io/pypi/pyversions/{{ cookiecutter.project_name }}.svg)](https://pypi.python.org/pypi/{{ cookiecutter.project_name }})
 
 ## 目录结构
 
@@ -30,17 +30,16 @@
 
 ## 安装环境依赖
 
-1.安装 pipenv
+1.安装 invoke
 
 ```bash
-pip install pipenv
+pip install invoke
 ```
 
 2.安装项目依赖环境
 
 ```bash
-pipenv --two install --deploy # py2
-pipenv --three install --deploy # py3
+inv install --dev
 ```
 
 3.安装 Git hooks
@@ -62,12 +61,6 @@ cp -r hooks/* .git/hooks/
 
 ## 运行单元测试
 
-首先需要进入我们安装的虚拟环境
-
-```bash
-pipenv shell
-```
-
 ### 第一种
 
 ```bash
@@ -77,13 +70,23 @@ inv coverage
 ### 第二种
 
 ```bash
-inv unittest
+inv test
 ```
 
 ## 检查 Python 代码规范
 
 ```bash
-inv check
+inv lint
+```
+
+## 更新版本
+
+```bash
+# 小版本
+bumpversion patch
+
+# 中版本
+bumpversion minor
 ```
 
 ## 详细文档
