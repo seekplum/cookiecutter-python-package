@@ -1,6 +1,0 @@
-include VERSION
-
-recursive-include conf *
-recursive-include bin *
-recursive-exclude * __pycache__
-recursive-exclude * *.py[co]

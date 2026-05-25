@@ -1,9 +1,0 @@
-# Ignore everything
-**
-
-# ... except for dependencies and source
-!requirements.txt
-!requirements-dev.txt
-!!{{cookiecutter.project_slug}}
-!tasks.py
-!tests

@@ -8,7 +8,7 @@ Changelog格式基于[Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
-## [{{cookiecutter.version}}] - 2018-07-06
+## [{{cookiecutter.version}}] - {% now 'utc', '%Y-%m-%d' %}
 
 ### Added
 

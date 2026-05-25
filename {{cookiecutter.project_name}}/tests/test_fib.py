@@ -1,13 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-#=============================================================================
-#  ProjectName: {{cookiecutter.project_name}}
-#     FileName: fib.py
-#       Author: {{ cookiecutter.author }}
-#        Email: huangjiandong95@sina.com
-#=============================================================================
-"""
-
 import pytest
 
 from {{ cookiecutter.project_slug }}.fib import fib

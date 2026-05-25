@@ -1,6 +1,6 @@
 before_script:
-  - pip install pipenv
-  - pipenv install --deploy --dev --skip-lock
+  - pip install uv
+  - uv sync --no-dev --frozen
 
 stages:
  - check
@@ -9,13 +9,13 @@ stages:
 check:
   stage: check
   script:
-    - inv check
+    - uv run poe lint
   tags:
     - {{ cookiecutter.project_name }}
 
 unittest:
   stage: unittest
   script:
-    - inv unittest
+    - uv run poe test
   tags:
     - {{ cookiecutter.project_name }}

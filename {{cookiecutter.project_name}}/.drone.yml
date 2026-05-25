@@ -1,0 +1,107 @@
+kind: pipeline
+type: docker
+name: default
+
+platform:
+  os: linux
+  arсh: amd64
+
+steps:
+  - name: Install Requirements
+    image: python:3.13-slim
+    commands:
+      - pip install uv --index-url {{ cookiecutter.pip_index_url }} --cache-dir /tmp/pip_cache
+      - uv sync --frozen --cache-dir /tmp/pip_cache
+    volumes:
+      - name: deps_bin
+        path: /usr/local/bin
+      - name: deps_pip_cache
+        path: /tmp/pip_cache
+  - name: Unittest
+    image: python:3.13-slim
+    depends_on: ["Install Requirements"]
+    commands:
+      - unlink /etc/localtime && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone
+      - uv run poe test
+    volumes:
+      - name: deps_bin
+        path: /usr/local/bin
+  - name: Static type checker
+    image: python:3.13-slim
+    depends_on: ["Install Requirements"]
+    commands:
+      - uv run poe lint-mypy
+    volumes:
+      - name: deps_bin
+        path: /usr/local/bin
+      - name: mypy_cache
+        path: /drone/src/.mypy_cache
+  - name: Code formatter checker
+    image: python:3.13-slim
+    depends_on: ["Install Requirements"]
+    commands:
+      - uv run poe lint-black
+    volumes:
+      - name: deps_bin
+        path: /usr/local/bin
+  - name: Imports alphabetically checker
+    image: python:3.13-slim
+    depends_on: ["Install Requirements"]
+    commands:
+      - uv run poe lint-isort
+    volumes:
+      - name: deps_bin
+        path: /usr/local/bin
+  - name: Style guide checker
+    image: python:3.13-slim
+    depends_on: ["Install Requirements"]
+    commands:
+      - uv run poe lint-flake8
+    volumes:
+      - name: deps_bin
+        path: /usr/local/bin
+  - name: Static code analyser
+    image: python:3.13-slim
+    depends_on: ["Install Requirements"]
+    commands:
+      - uv run poe lint-pylint
+    volumes:
+      - name: deps_bin
+        path: /usr/local/bin
+  - name: Security code checker
+    image: python:3.13-slim
+    depends_on: ["Install Requirements"]
+    commands:
+      - uv run poe lint-bandit
+    volumes:
+      - name: deps_bin
+        path: /usr/local/bin
+  - name: FeiShu notification
+    pull: if-not-exists
+    image: serialt/drone-feishu-message
+    depends_on: ["Unittest", "Static type checker", "Code formatter checker", "Imports alphabetically checker", "Style guide checker", "Static code analyser", "Security code checker"]
+    settings:
+      token:
+        from_secret: feishu_token
+      type: markdown
+      message_color: true
+      message_pic: true
+      sha_link: true
+    when:
+      status: [failure]
+
+trigger:
+  branch:
+    - master
+  event:
+    - pull_request
+
+volumes:
+  - name: deps_bin
+    temp: {}
+  - name: mypy_cache
+    host:
+      path: /tmp/drone/{{ cookiecutter.project_name }}/drone/src/.mypy_cache
+  - name: deps_pip_cache
+    host:
+      path: /tmp/drone/{{ cookiecutter.project_name }}/pip_cache

@@ -1,14 +1,14 @@
 {
   "project_name": "project_name",
   "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '_')|replace('-', '_') }}",
-  "python_version": "3.7",
+  "project_tag": "{{ cookiecutter.project_slug|replace('_web', '') }}",
+  "python_version": "3.13",
   "author": "seekplum",
   "email": "1131909224m@sina.cn",
   "description": "A short description of the project",
   "version": "0.1.0",
-  "use_gitlab_ci": "n",
-  "use_github_ci": "y",
   "pip_index_url": "https://mirrors.aliyun.com/pypi/simple",
-  "pip_trusted_host": "pypi.org/simple",
-  "pip_extra_index_url": "https://{{cookiecutter.pip_trusted_host}}:80"
+  "use_github_ci": "y",
+  "use_gitlab_ci": "n",
+  "use_drone_ci": "n"
 }
