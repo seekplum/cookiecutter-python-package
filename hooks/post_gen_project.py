@@ -28,6 +28,7 @@ def remove_files() -> None:
     check_file_required("{{ cookiecutter.use_gitlab_ci }}", ".gitlab-ci.yml")
     check_file_required("{{ cookiecutter.use_drone_ci }}", ".drone.yml")
     check_file_required("{{ cookiecutter.use_github_ci }}", ".github")
+    remove_file(".github/workflows/publish-docker.yml")
 
 
 def fix_readme_placeholders() -> None:
