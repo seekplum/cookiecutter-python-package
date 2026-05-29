@@ -12,6 +12,7 @@ function parse_args() {
     project_tag=""
     description=""
     pip_index_url=""
+    version=""
     debug=0
     author=seekplum
     email=1131909224m@sina.cn
@@ -36,6 +37,10 @@ function parse_args() {
             ;;
         --pip-index-url)
             pip_index_url="$2"
+            shift 2
+            ;;
+        --version)
+            version="$2"
             shift 2
             ;;
         --email)
@@ -92,7 +97,7 @@ function sd_replace() {
         error "sd_replace 需要非空的替换字符串"
         exit 1
     fi
-    run_cmd "rg --hidden -g '!{.git,.venv,scaffold.sh,cookiecutter.json,test.sh,README.md}' -l -F '$from' | xargs sd -s '$from' '$to'"
+    run_cmd "rg --hidden -g '!{.git,.venv,test.sh}' -l -F '$from' | xargs sd -s '$from' '$to'"
 }
 
 function gen_project() {
@@ -104,10 +109,10 @@ function gen_project() {
     cmd+=" project_tag=${project_tag}"
     [[ -n "$description" ]] && cmd+=" description='${description}'"
     [[ -n "$pip_index_url" ]] && cmd+=" pip_index_url=${pip_index_url}"
+    [[ -n "$version" ]] && cmd+=" version=${version}"
     cmd+=" author=${author}"
     cmd+=" email=${email}"
     cmd+=" python_version=3.13"
-    cmd+=" version=0.0.1"
     cmd+=" use_github_ci=y use_drone_ci=n use_gitlab_ci=n"
 
     mkdir -p "$OUTDIR"
@@ -126,12 +131,14 @@ function gen_project() {
 
 function restory_start_kit() {
     parse_args "$@"
+    cd \{\{cookiecutter.project_name\}\} && pwd
 
     sd_replace "$project_name" "{{ cookiecutter.project_name }}"
     sd_replace "$project_slug" "{{ cookiecutter.project_slug }}"
     sd_replace "$project_tag" "{{ cookiecutter.project_tag }}"
     [[ -n "$description" ]] && sd_replace "$description" "{{ cookiecutter.description }}"
     [[ -n "$pip_index_url" ]] && sd_replace "$pip_index_url" "{{ cookiecutter.pip_index_url }}"
+    [[ -n "$version" ]] && sd_replace "$version" "{{ cookiecutter.version }}"
     sd_replace "$author" "{{ cookiecutter.author }}"
     sd_replace "$email" "{{ cookiecutter.email }}"
     sd_replace "{{{\"" "{% raw %}{{{{% endraw %}\""

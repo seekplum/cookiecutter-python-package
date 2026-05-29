@@ -2,6 +2,7 @@
 authors = [
   {"name" = "{{ cookiecutter.author }}", "email" = "{{ cookiecutter.email }}"}
 ]
+readme = "README.md"
 name = "{{ cookiecutter.project_name }}"
 version = "{{ cookiecutter.version }}"
 description = "{{ cookiecutter.description }}"
@@ -14,6 +15,11 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14"
+]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "/.devbox",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -29,11 +35,11 @@ build-backend = "hatchling.build"
 [project.scripts]
 
 [project.urls]
-Homepage = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}"
-Documentation = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}"
-Repository = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}.git"
-"Bug Tracker" = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/issues"
-Changelog = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/blob/master/CHANGELOG.md"
+Homepage = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}"
+Documentation = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}"
+Repository = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.git"
+"Bug Tracker" = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/issues"
+Changelog = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/blob/master/CHANGELOG.md"
 
 
 [dependency-groups]

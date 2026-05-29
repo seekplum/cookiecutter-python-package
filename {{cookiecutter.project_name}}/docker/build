@@ -1,0 +1,10 @@
+#!/bin/bash
+cd "$(dirname "$0")/.."
+docker buildx build \
+	--build-arg BUILDKIT_INLINE_CACHE=1 \
+	--build-arg BUILD_ID="${JENKINS_BUILD_ID}" \
+	--build-arg BUILD_VERSION="{% raw %}${{% endraw %}{{ cookiecutter.project_slug.upper() }}_BUILD_TAG{% raw %}}{% endraw %}" \
+    --file ./docker/Dockerfile \
+    --load \
+    --network=host \
+    --tag {{ cookiecutter.project_name }} .

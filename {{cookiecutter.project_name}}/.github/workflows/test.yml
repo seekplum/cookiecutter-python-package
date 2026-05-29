@@ -61,7 +61,22 @@ jobs:
       - name: Security code checker
         run: uv run poe lint-bandit
       - name: Run Unittest
-        run: uv run poe test
+        run:
+          uv run poe test --cov=./ --cov-report=xml -ra
+          {% raw %}${PYTEST_XDIST_MAXPROCESSES:+--maxprocesses=$PYTEST_XDIST_MAXPROCESSES} .{% endraw %}
+      - name: Upload coverage to Codecov
+        continue-on-error: true
+        uses: codecov/codecov-action@v6
+        env:
+          OS: {% raw %}${{ matrix.os }}{% endraw %}
+          PYTHON: {% raw %}${{ matrix.python-version }}{% endraw %}
+        with:
+          env_vars: OS,PYTHON
+          fail_ci_if_error: true
+          file: ./coverage.xml
+          flags: unittests
+          name: copier
+          token: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
   devbox:
     strategy:
       fail-fast: false
