@@ -24,7 +24,7 @@
 ├── README.md           # 项目自述文件
 ├── bin                 # 项目二进制程序
 ├── docs                # 项目文档
-├── {{cookiecutter.project_name}}          # 核心代码模块
+├── {{ cookiecutter.project_name }}          # 核心代码模块
 └── tests               # 单元测试目录
 
 ```

@@ -33,6 +33,7 @@ requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project.scripts]
+fib = "{{ cookiecutter.project_slug }}.fib:main"
 
 [project.urls]
 Homepage = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}"
@@ -47,7 +48,6 @@ dev = [
     "autoflake>=2.3.3",
     "bandit[toml]>=1.9.4",
     "black>=26.3.1",
-    "bump2version>=1.0.1",
     "codespell[toml]>=2.4.2",
     "commitizen",
     "flake8>=7.3.0",
@@ -65,6 +65,7 @@ dev = [
     "pyupgrade>=3.21.2",
     "ruff>=0.15.11",
     "vulture>=2.16",
+    "bump-my-version>=1.3.0",
 ]
 
 [tool.poe]
@@ -92,7 +93,7 @@ disable = [
 [tool.pylint.master]
 ignore = ["tests"]
 job = 0
-extension-pkg-whitelist = "pydantic"
+extension-pkg-whitelist = ""
 
 [tool.pylint.format]
 max-line-length = 120
@@ -125,7 +126,7 @@ max-args = 7
 max-positional-arguments = 8
 
 [tool.mypy]
-plugins = "pydantic.mypy"
+plugins = ""
 ignore_missing_imports = true
 mypy_path = "mystubs"
 exclude = []
@@ -150,7 +151,11 @@ filterwarnings = [
 exclude_lines = [
   "pragma: no cover",
   "def __repr__",
+  "raise AssertionError",
+  "raise NotImplementedError",
   "if __name__ == .__main__.:",
+  "if 0:",
+  "if self\\.debug",
 ]
 show_missing = true
 skip_covered = true
@@ -214,7 +219,7 @@ exclude_dirs = [
   '.pytest_cache',
   'test.py',
 ]
-skips = ['B110', 'B311', 'B105', 'B106', 'B403', 'B413', 'B301']
+skips = ['B110', 'B311', 'B105', 'B106', 'B403', 'B413', 'B301', 'B108', 'B404']
 
 [tool.bandit.assert_used]
 skips = ['./tests/*', 'tests/*', '*_test.py', '*test_*.py']
@@ -234,9 +239,33 @@ ignore-words-list = 'ans'
 
 [tool.vulture]
 exclude = ["dos/", "examples/", ".venv/", ".git/"]
-ignore_decorators = ["@openapi.tool", "@openapi.custom_route"]
+ignore_decorators = []
 ignore_names = []
 make_whitelist = true
 min_confidence = 60
 sort_by_size = true
 verbose = false
+
+[tool.bumpversion]
+current_version = "{{ cookiecutter.version }}"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+search = "{current_version}"
+replace = "{new_version}"
+commit = true
+tag = true
+message = "chore(release): bump version {current_version} -> {new_version}"
+pre_commit_hooks = [
+    "uv sync",
+    "git add uv.lock"
+]
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "src/{{ cookiecutter.project_slug }}/__init__.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'

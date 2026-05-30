@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 import shlex
-import subprocess  # nosec B404
+import subprocess
 import sys
 import typing as t
 from collections.abc import Iterable, Sequence
@@ -274,6 +274,7 @@ def clean_pyc() -> None:
         "__pycache__",
         ".mypy_cache",
         "*.egg-info",
+        "dist",
     )
     _find_delete(tmp_files, recursive=False)
     _find_delete(tmp_dirs, recursive=True)
@@ -283,6 +284,7 @@ def clean_test() -> None:
     tmp_files = (
         "pytest_coverage*.xml",
         "pytest_result*.xml",
+        "coverage.xml",
     )
     tmp_dirs = (
         ".ruff_cache",
