@@ -1,3 +1,5 @@
+default_install_hook_types: [pre-commit, commit-msg]
+
 repos:
   - repo: local
     hooks:
@@ -32,10 +34,11 @@ repos:
         require_serial: false
         types_or: [python, pyi]
 
-      - id: unittest
-        name: unittest
-        entry: uv run poe test
+      - id: format
+        name: format
+        entry: uv run poe format
         language: system
-        pass_filenames: false
+        verbose: false
+        pass_filenames: true
         require_serial: false
         types_or: [python, pyi]

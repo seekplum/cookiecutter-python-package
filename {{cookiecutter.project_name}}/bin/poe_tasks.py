@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 import shlex
-import subprocess
+import subprocess  # nosec B404
 import sys
 import typing as t
 from collections.abc import Iterable, Sequence
@@ -116,7 +116,7 @@ def _find_delete(names: Iterable[str], *, recursive: bool) -> None:
     _run((*_FIND_BASE, "(", *expr, ")", "-exec", "rm", rm_flag, "{}", "+"))
 
 
-def generate_poe_config() -> dict[str, t.Any]:  # noqa
+def generate_poe_config() -> dict[str, t.Any]:
     tasks: dict[str, dict[str, t.Any]] = {}
 
     for task_name, help_text, function_name in _SOURCE_TASKS:
@@ -180,7 +180,7 @@ def lint_pylint(sources: str = "") -> None:
 
 
 def lint_ruff(sources: str = "") -> None:
-    _run(("ruff", "check", *_source_args(sources), "--fix"))
+    _run(("ruff", "check", *_source_args(sources)))
 
 
 def lint_bandit(sources: str = "") -> None:
@@ -191,11 +191,11 @@ def lint_codespell(sources: str = "") -> None:
     _run(("codespell", *_source_args(sources)))
 
 
-def lint_vulture(sources: str = "") -> None:  # noqa
+def lint_vulture(sources: str = "") -> None:
     _run(("vulture", *_source_args(sources)))
 
 
-def lint(sources: str = "") -> None:  # noqa
+def lint(sources: str = "") -> None:
     lint_codespell(sources)
     lint_mypy(sources)
     lint_black(sources)
@@ -230,17 +230,18 @@ def format_black(sources: str = "") -> None:
 
 
 def format_ruff(sources: str = "") -> None:
+    _run(("ruff", "check", *_source_args(sources), "--fix", "--unsafe-fixes"))
     _run(("ruff", "format", *_source_args(sources)))
 
 
-def format(sources: str = "") -> None:  # noqa
+def format(sources: str = "") -> None:
     format_autoflake(sources)
     format_isort(sources)
     format_black(sources)
     format_ruff(sources)
 
 
-def test() -> None:  # noqa
+def test() -> None:
     pytest_args = tuple(sys.argv[1:])
     if pytest_args:
         _run(("pytest", *pytest_args))
@@ -297,21 +298,21 @@ def clean_test() -> None:
     _find_delete(tmp_dirs, recursive=True)
 
 
-def clean() -> None:  # noqa
+def clean() -> None:
     clean_pyc()
     clean_test()
 
 
-def upgrade_deps() -> None:  # noqa
+def upgrade_deps() -> None:
     _run(("uv", "lock", "--upgrade"))
 
 
-def upgrade_pkg(pkg: str = "") -> None:  # noqa
+def upgrade_pkg(pkg: str = "") -> None:
     normalized_pkg = _validate_package_name(pkg)
     _run(("uv", "add", normalized_pkg, "--upgrade-package", normalized_pkg))
 
 
-def pyupgrade() -> None:  # noqa
+def pyupgrade() -> None:
     result = _run(
         ("fd", "-e", "py", "-t", "f", "-E", ".venv", "-E", ".git"),
         check=True,
