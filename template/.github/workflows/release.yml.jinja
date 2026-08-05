@@ -52,7 +52,7 @@ jobs:
     if: {% raw %}${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') }}{% endraw %}
     environment:
       name: pypi_test
-      url: https://test.pypi.org/p/{{ cookiecutter.project_name }}
+      url: https://test.pypi.org/p/{{ project_name }}
     permissions:
       id-token: write
 
@@ -76,7 +76,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     environment:
       name: pypi
-      url: https://pypi.org/p/{{ cookiecutter.project_name }}
+      url: https://pypi.org/p/{{ project_name }}
     permissions:
       id-token: write
 

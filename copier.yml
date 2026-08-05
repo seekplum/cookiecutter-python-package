@@ -1,0 +1,102 @@
+# ============================================================
+# Copier 模板配置
+# 参考文档: https://copier.readthedocs.io/
+# ============================================================
+
+# ==== Copier 设置 ====
+_min_copier_version: "9.2.0"
+
+# 模板内容位于 template/ 子目录
+_subdirectory: template
+
+# CHANGELOG.md 中使用了 {% now %}, 需要 jinja2-time 插件
+# 该插件属于 unsafe 特性, 生成项目时需要加 --trust
+_jinja_extensions:
+  - jinja2_time.TimeExtension
+
+# 由于配置了 _subdirectory, exclude 默认值为 [], 这里需要显式补齐
+_exclude:
+  - .git
+  - .DS_Store
+  - .svn
+  - "~*"
+  - __pycache__
+  - "*.py[co]"
+  - .mypy_cache
+  - .pytest_cache
+  - .ruff_cache
+  - .benchmarks
+  - .coverage
+  - coverage.xml
+  - "{% if not use_github_ci %}.github/workflows/release.yml{% endif %}"
+  - "{% if not use_github_ci %}.github/workflows/test.yml{% endif %}"
+  - "{% if not use_gitlab_ci %}.gitlab-ci.yml{% endif %}"
+  - "{% if not use_drone_ci %}.drone.yml{% endif %}"
+  - "{% if not use_docker %}docker{% endif %}"
+  - "{% if not use_docker %}.github/workflows/publish-docker.yml{% endif %}"
+  - "{% if not use_docker %}bin/build_image.sh{% endif %}"
+
+_message_after_copy: |
+
+  ✔ 项目已生成: {{ _copier_conf.dst_path }}
+
+  常用命令:
+    uv sync                  # 安装依赖
+    uv run poe lint          # 代码规范检查
+    uv run poe test          # 运行单元测试
+
+# ==== 问题 ====
+project_name:
+  type: str
+  help: 项目名称，用于包名、仓库名等
+  default: project_name
+
+project_slug:
+  type: str
+  help: 项目标识（Python 模块名），默认由 project_name 自动转换
+  default: "{{ project_name.lower()|replace(' ', '_')|replace('-', '_') }}"
+  validator: >-
+    {% if not (project_slug | regex_search('^[a-zA-Z][_a-zA-Z0-9]+$')) %}
+    project_slug 不是合法的 Python 模块名（只能包含字母、数字、下划线，且以字母开头）
+    {% endif %}
+
+project_tag:
+  type: str
+  help: 项目标签，默认由 project_slug 去掉 _web 后缀
+  default: "{{ project_slug.replace('_web', '') }}"
+
+author:
+  type: str
+  default: seekplum
+
+email:
+  type: str
+  default: "1131909224m@sina.cn"
+
+description:
+  type: str
+  default: A short description of the project
+
+version:
+  type: str
+  default: "0.1.0"
+
+pip_index_url:
+  type: str
+  default: https://mirrors.aliyun.com/pypi/simple
+
+use_github_ci:
+  type: bool
+  default: yes
+
+use_gitlab_ci:
+  type: bool
+  default: no
+
+use_drone_ci:
+  type: bool
+  default: no
+
+use_docker:
+  type: bool
+  default: no

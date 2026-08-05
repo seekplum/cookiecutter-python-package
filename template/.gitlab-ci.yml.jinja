@@ -11,11 +11,11 @@ check:
   script:
     - uv run poe lint
   tags:
-    - {{ cookiecutter.project_name }}
+    - {{ project_name }}
 
 unittest:
   stage: unittest
   script:
     - uv run poe test
   tags:
-    - {{ cookiecutter.project_name }}
+    - {{ project_name }}

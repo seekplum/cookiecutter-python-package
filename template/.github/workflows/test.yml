@@ -12,14 +12,14 @@ permissions:
 env:
   LANG: "en_US.utf-8"
   LC_ALL: "en_US.utf-8"
-  PRE_COMMIT_HOME: {% raw %}${{ github.workspace }}{% endraw %}/.cache/pre-commit
+  PRE_COMMIT_HOME: ${{ github.workspace }}/.cache/pre-commit
   PYTHONIOENCODING: "UTF-8"
   UV_VERSION: "0.11.7"
   DEVBOX_VERSION: "0.17.1"
 
 jobs:
   tests:
-    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -38,14 +38,14 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: {% raw %}${{ env.UV_VERSION }}{% endraw %}
-          python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ matrix.python-version }}
           enable-cache: "true"
-          cache-suffix: {% raw %}${{ matrix.python-version }}{% endraw %}
-      - name: Set up Python {% raw %}${{ matrix.python-version }}{% endraw %}
+          cache-suffix: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
-          python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
+          python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: uv sync --frozen
       - name: Static type checker
@@ -63,20 +63,20 @@ jobs:
       - name: Run Unittest
         run:
           uv run poe test --cov=./ --cov-report=xml -ra
-          {% raw %}${PYTEST_XDIST_MAXPROCESSES:+--maxprocesses=$PYTEST_XDIST_MAXPROCESSES} .{% endraw %}
+          ${PYTEST_XDIST_MAXPROCESSES:+--maxprocesses=$PYTEST_XDIST_MAXPROCESSES} .
       - name: Upload coverage to Codecov
         continue-on-error: true
         uses: codecov/codecov-action@v6
         env:
-          OS: {% raw %}${{ matrix.os }}{% endraw %}
-          PYTHON: {% raw %}${{ matrix.python-version }}{% endraw %}
+          OS: ${{ matrix.os }}
+          PYTHON: ${{ matrix.python-version }}
         with:
           env_vars: OS,PYTHON
           fail_ci_if_error: true
           file: ./coverage.xml
           flags: unittests
           name: copier
-          token: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
+          token: ${{ secrets.CODECOV_TOKEN }}
   devbox:
     strategy:
       fail-fast: false
@@ -87,7 +87,7 @@ jobs:
         include:
           - os: macos-latest
             pytest-xdist-maxprocesses: 3
-    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: write
     steps:
@@ -95,7 +95,7 @@ jobs:
       - name: Install devbox
         uses: jetify-com/devbox-install-action@v0.15.0
         with:
-          devbox-version: {% raw %}${{ env.DEVBOX_VERSION }}{% endraw %}
+          devbox-version: ${{ env.DEVBOX_VERSION }}
           enable-cache: "true"
       - run: devbox run -- uv run pre-commit run --all-files --show-diff-on-failure
       - run: devbox run test

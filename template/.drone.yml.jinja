@@ -10,7 +10,7 @@ steps:
   - name: Install Requirements
     image: python:3.13-slim
     commands:
-      - pip install uv --index-url {{ cookiecutter.pip_index_url }} --cache-dir /tmp/pip_cache
+      - pip install uv --index-url {{ pip_index_url }} --cache-dir /tmp/pip_cache
       - uv sync --frozen --cache-dir /tmp/pip_cache
     volumes:
       - name: deps_bin
@@ -101,7 +101,7 @@ volumes:
     temp: {}
   - name: mypy_cache
     host:
-      path: /tmp/drone/{{ cookiecutter.project_name }}/drone/src/.mypy_cache
+      path: /tmp/drone/{{ project_name }}/drone/src/.mypy_cache
   - name: deps_pip_cache
     host:
-      path: /tmp/drone/{{ cookiecutter.project_name }}/pip_cache
+      path: /tmp/drone/{{ project_name }}/pip_cache

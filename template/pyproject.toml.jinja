@@ -1,11 +1,11 @@
 [project]
 authors = [
-  {"name" = "{{ cookiecutter.author }}", "email" = "{{ cookiecutter.email }}"}
+  {"name" = "{{ author }}", "email" = "{{ email }}"}
 ]
 readme = "README.md"
-name = "{{ cookiecutter.project_name }}"
-version = "{{ cookiecutter.version }}"
-description = "{{ cookiecutter.description }}"
+name = "{{ project_name }}"
+version = "{{ version }}"
+description = "{{ description }}"
 license = { text = "MIT" }
 dependencies = []
 requires-python = ">=3.12,<3.15"
@@ -23,7 +23,7 @@ exclude = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/{{ cookiecutter.project_slug }}"]
+packages = ["src/{{ project_slug }}"]
 
 [tool.hatch.version]
 source = "vcs"
@@ -33,14 +33,14 @@ requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project.scripts]
-fib = "{{ cookiecutter.project_slug }}.fib:main"
+fib = "{{ project_slug }}.fib:main"
 
 [project.urls]
-Homepage = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}"
-Documentation = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}"
-Repository = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}.git"
-"Bug Tracker" = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/issues"
-Changelog = "https://github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_name }}/blob/master/CHANGELOG.md"
+Homepage = "https://github.com/{{ author }}/{{ project_name }}"
+Documentation = "https://github.com/{{ author }}/{{ project_name }}"
+Repository = "https://github.com/{{ author }}/{{ project_name }}.git"
+"Bug Tracker" = "https://github.com/{{ author }}/{{ project_name }}/issues"
+Changelog = "https://github.com/{{ author }}/{{ project_name }}/blob/master/CHANGELOG.md"
 
 
 [dependency-groups]
@@ -73,7 +73,7 @@ dev = [
 include_script = "bin.poe_tasks:generate_poe_config"
 
 [[tool.uv.index]]
-url = "{{ cookiecutter.pip_index_url }}"
+url = "{{ pip_index_url }}"
 default = true
 
 [tool.pylint]
@@ -239,7 +239,7 @@ ignore-regex = '\bla vie\b'
 ignore-words-list = 'ans'
 
 [tool.vulture]
-exclude = ["dos/", "examples/", ".venv/", ".git/"]
+exclude = ["dos/", ".venv/", ".git/"]
 ignore_decorators = []
 ignore_names = []
 make_whitelist = true
@@ -248,7 +248,7 @@ sort_by_size = true
 verbose = false
 
 [tool.bumpversion]
-current_version = "{{ cookiecutter.version }}"
+current_version = "{{ version }}"
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
 serialize = ["{major}.{minor}.{patch}"]
 search = "{current_version}"
@@ -267,6 +267,11 @@ search = 'version = "{current_version}"'
 replace = 'version = "{new_version}"'
 
 [[tool.bumpversion.files]]
-filename = "src/{{ cookiecutter.project_slug }}/__init__.py"
+filename = ".copier-answers.yml"
+search = 'version: {current_version}'
+replace = 'version: {new_version}'
+
+[[tool.bumpversion.files]]
+filename = "src/{{ project_slug }}/__init__.py"
 search = '__version__ = "{current_version}"'
 replace = '__version__ = "{new_version}"'

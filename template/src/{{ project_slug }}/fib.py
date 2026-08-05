@@ -18,7 +18,7 @@ def fib(n: int) -> int:
     return fib(n - 1) + fib(n - 2)
 
 
-def main():
+def main():  # noqa
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-v",
